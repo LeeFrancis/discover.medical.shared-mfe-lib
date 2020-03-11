@@ -6,11 +6,10 @@
     "market": "medical"
   },
   "description": "House micro front-end components for shared use",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "node": ">=10.15.1"
   },
-  "main": "./src/index.js",
   "author": "@ebscois/poc.mergeconflict <mergeconflict@ebsco.com>",
   "license": "UNLICENSED",
   "repository": {
@@ -18,18 +17,50 @@
     "url": "git://github.com/EBSCOIS/discover.medical.shared-mfe-lib.git"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "@ebsco/dependency-audit": "^0.2.3",
-    "cross-env": "^5.1.4",
-    "eslint": "^4.18.2",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^1.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.8.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.4.0",
     "jest": "^24.8.0",
+    "jest-cli": "^23.6.0",
     "lint-staged": "^7.0.0",
-    "prettier": "^1.18.2"
+    "node-sass": "^4.7.2",
+    "prettier": "^1.18.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.6.0",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^16.6.0",
+    "react-hot-loader": "next",
+    "react-test-renderer": "^16.0.0",
+    "regenerator-runtime": "^0.12.1",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.9.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.4"
   },
+  "main": "./dist/index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node .",
-    "prod": "cross-env NODE_ENV=production node .",
+    "build": "webpack --config webpack.config.babel.js",
+    "clean": "rm -rf dist coverage",
+    "coverage": "jest --coverage",
+    "lint": "eslint ./src",
+    "prepublish": "npm run clean && npm run build",
+    "start": "webpack-dev-server --config examples/webpack.config.live.babel.js",
+    "test": "npm run lint && npm run coverage",
     "precommit": "lint-staged",
     "dependency-audit": "dependency-audit"
   },
@@ -43,9 +74,14 @@
       "git add"
     ]
   },
+  "peerDependencies": {
+    "react": ">= 16.3.0",
+    "react-dom": ">= 16.3.0"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  },
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "webpack-node-externals": "^1.7.2"
   }
 }
