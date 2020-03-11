@@ -3,21 +3,20 @@ import ReactDOM from "react-dom";
 import { MFEContext } from "./context";
 
 const MicroFrontEnd = props => {
-  const { id, mfeHost } = props;
+  const { id, mfeHost, target } = props;
   const [mountNode, setMountNode] = useState();
   const [error, setError] = useState();
-  const [el, setEl] = useState();
-  const [mfeContainerDiv, setMfeContainerDiv] = useState();
-  const mfeManager = useContext(MFEContext);
+  let [el, setEl] = useState();
+  const { mfeManager } = useContext(MFEContext);
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
-
+  if (!el) {
+    el = document.createElement("div");
+    el.setAttribute("id", id);
+    setEl(el);
+  }
   useEffect(() => {
-    setEl(
-      document.getElementById(props.id) ||
-        document.createElement("div").setAttribute("id", id)
-    );
-    setMfeContainerDiv(document.getElementById(props.target));
+    const mfeContainerDiv = document.getElementById(target);
     try {
       mfeContainerDiv.appendChild(el);
     } catch (e) {
@@ -35,10 +34,10 @@ const MicroFrontEnd = props => {
         forceUpdate();
       }
     );
-  }, []);
+  }, [el, forceUpdate, id, mfeHost, mfeManager, target]);
 
   if (typeof error !== "undefined" && error) {
-    return ReactDOM.createPortal(<div>{error}</div>, this.el);
+    return ReactDOM.createPortal(<div>{error}</div>, el);
   }
   return ReactDOM.createPortal(mountNode || loadingChild(), el);
 };
