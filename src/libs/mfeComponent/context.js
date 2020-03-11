@@ -8,14 +8,16 @@ export class MFEManager {
   }
   setMountNode(id, mountNode) {
     this.store[id] = this.store[id] || {};
-    this.store[id].mountNode = this.store[id].mountNode || mountNode;
+    this.store[id].mountNode =
+      this.store[id].mountNode ||
+      React.cloneElement(mountNode, { BULLSHIT: "YUP!", mfeManager: this });
     return this.store[id].mountNode;
   }
   setInUse(id, inUse) {
-    const container = this.store[id];
-    if (container) {
-      this.store.inUse = inUse;
-      return container;
+    const mfe = this.store[id];
+    if (mfe) {
+      this.store[id].inUse = inUse;
+      return mfe.container;
     }
     // console.log(`MicroFrontEnd: Failed to find mfe for ${id}`);
     return {};
