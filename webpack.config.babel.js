@@ -1,13 +1,16 @@
 import path from "path";
 import CleanWebpackPlugin from "clean-webpack-plugin";
+const nodeExternals = require("webpack-node-externals");
+
 const packageJson = require("./package.json");
 
 export default () => ({
   mode: "production",
+  target: "node", // in order to ignore built-in modules like path, fs, etc.
   entry: {
     index: path.join(__dirname, "src/index.js")
   },
-
+  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].js",
@@ -40,12 +43,6 @@ export default () => ({
 
   resolve: {
     extensions: [".js", ".jsx", ".scss"]
-  },
-
-  externals: {
-    // Use external version of React
-    react: "React",
-    "react-dom": "ReactDOM"
   },
 
   plugins: [new CleanWebpackPlugin(["dist/*.*"])],
