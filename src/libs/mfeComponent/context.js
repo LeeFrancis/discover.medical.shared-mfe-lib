@@ -61,7 +61,7 @@ export class MFEManager {
       return new Promise((resolve, reject) => {
         // console.log(`is ${id} loaded: ${this.isScriptLoaded()}.`);
         if (!this.isScriptLoaded()) {
-          this.loadMfe(mfeHost, newMountNode, resolve, reject);
+          this.loadMfe(mfeHost, resolve, reject);
         } else {
           // Script is already loaded, all we had to do was mount
           // This can happen if we pull in the same microui multiple times
@@ -85,17 +85,17 @@ export class MFEManager {
       );
     }
   }
-  renderMicroFrontEnd(name, resolve, reject, mfeManager) {
+  renderMicroFrontEnd(name, resolve, reject) {
     try {
-      resolve(window[`render${name}`](mfeManager));
+      resolve(window[`render${name}`]());
     } catch (err) {
       reject(new Error(`Problem mounting Microi - ${err}`));
     }
   }
-  loadMfe({ name, host, path = "" }, newMountNode, resolve, reject) {
+  loadMfe({ name, host, path = "" }, resolve, reject) {
     const scriptId = `micro-frontend-script-${name}`;
     const renderMicroFrontEndWrapper = () =>
-      this.renderMicroFrontEnd(name, resolve, reject, this);
+      this.renderMicroFrontEnd(name, resolve, reject);
     fetch(`${host}${path}/asset-manifest.json`)
       .then(res => res.json())
       .then(manifest => {
