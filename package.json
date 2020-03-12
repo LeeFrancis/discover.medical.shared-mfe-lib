@@ -6,7 +6,7 @@
     "market": "medical"
   },
   "description": "House micro front-end components for shared use",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "node": ">=10.15.1"
   },
