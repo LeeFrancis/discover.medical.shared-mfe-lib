@@ -1,5 +1,5 @@
 import path from "path";
-import CleanWebpackPlugin from "clean-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 const nodeExternals = require("webpack-node-externals");
 
 const packageJson = require("./package.json");
@@ -45,7 +45,7 @@ export default () => ({
     extensions: [".js", ".jsx", ".scss"]
   },
 
-  plugins: [new CleanWebpackPlugin(["dist/*.*"])],
+  plugins: [new CleanWebpackPlugin()],
   optimization: {
     splitChunks: {
       name: "vendor",
