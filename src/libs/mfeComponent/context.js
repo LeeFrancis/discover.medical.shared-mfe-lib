@@ -6,11 +6,11 @@ export class MFEManager {
     this.store = mfeStore;
     this.loadedScriptsStore = loadedScriptsStore;
   }
-  setMountNode(id, mountNode) {
+  setMountNode(id, mountNode, mfeEntryPoint) {
     this.store[id] = this.store[id] || {};
     this.store[id].mountNode =
       this.store[id].mountNode ||
-      React.cloneElement(mountNode, { BULLSHIT: "YUP!", mfeManager: this });
+      React.cloneElement(mountNode, { mfeEntryPoint, mfeManager: this });
     return this.store[id].mountNode;
   }
   setInUse(id, inUse) {

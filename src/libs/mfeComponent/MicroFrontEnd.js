@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { MFEContext } from "./context";
 
 const MicroFrontEnd = props => {
-  const { id, mfeHost, target } = props;
+  const { id, mfeHost, target, mfeEntryPoint } = props;
   const [mountNode, setMountNode] = useState();
   const [error, setError] = useState();
   let [el, setEl] = useState();
@@ -25,7 +25,7 @@ const MicroFrontEnd = props => {
     }
     mfeManager.getMountNode(id, mfeHost).then(
       mountNode => {
-        setMountNode(mfeManager.setMountNode(id, mountNode));
+        setMountNode(mfeManager.setMountNode(id, mountNode, mfeEntryPoint));
         mfeManager.setScriptHost(mfeHost);
         forceUpdate();
       },
